@@ -81,8 +81,8 @@ then
 	do
 		if [ "${filename##*.}" == "java" ]
 		then
-			echo "sed -n -i '' \"s/$fromPackageName/$toPackageName/g\" $filename"
-			sed -n -i '' "s/$fromPackageName/$toPackageName/g" "$filename"
+			echo "sed -i '' \"s/$fromPackageName/$toPackageName/g\" $filename"
+			sed -i '' "s/$fromPackageName/$toPackageName/g" "$filename"
 		fi
 	done
 	cd -
