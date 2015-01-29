@@ -70,6 +70,24 @@ mv processed_mobage_market.xml $destGamePath/res/xml/mobage_market.xml
 php process_alliance.php $destGamePath/res/xml/mobage_alliance.xml $channelInfo
 mv processed_mobage_alliance.xml $destGamePath/res/xml/mobage_alliance.xml
 
+fromPackageName=`sed -n 1p packagename`
+toPackageName=`sed -n 2p packagename`
+if [ ! -z "$fromPackageName" ] && [ ! -z "$toPackageName" ]
+then
+	echo "change R..."
+	cd $destGamePath/src
+	filelist=`find . -type f`
+	for filename in $filelist
+	do
+		if [ "${filename##*.}" == "java" ]
+		then
+			echo "sed -in \"s/$fromPackageName/$toPackageName/g\" $filename"
+			sed -in "s/$fromPackageName/$toPackageName/g" "$filename"
+		fi
+	done
+	cd -
+fi
+
 rm -rf $destGamePath/gen/*
 cd $destLibDir
 android update project --path .
