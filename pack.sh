@@ -8,6 +8,7 @@ gameName="${4}"
 metaDataConf="$allianceDir/${gameName}params/metaData.conf"
 gameInfo="$allianceDir/${gameName}params/gameInfo.conf"
 channelInfo="$allianceDir/${gameName}params/channelInfo.conf"
+customManifestInfo="$allianceDir/${gameName}params/customManifestInfo.conf"
 orientation="${3}"
 
 if [ ! -d "$gameDir" ]; 
@@ -50,7 +51,7 @@ cp -R $mobageNativeLib/ $destLibDir/
 
 rsync -vzrtopgu -progress $mobageNativeLib/assets/ $destGamePath/assets/
 #rsync -vzrtopgu -progress $mobageNativeLib/libs/armeabi/ $destGamePath/libs/armeabi/
-rsync -vzrtopgu -progress $mobageNativeSample/libs/ $destGamePath/libs/
+#rsync -vzrtopgu -progress $mobageNativeSample/libs/ $destGamePath/libs/
 
 cp -R $mobageNativeLib/res/xml/ $destGamePath/res/xml/
 
@@ -87,6 +88,12 @@ then
 	done
 	cd -
 fi
+
+for line in `cat $customManifestInfo` 
+do
+	#array[${line%=*}]=${line#*=}
+	sed -i '' "s/${line%=*}/${line#*=}/g" $destGamePath/AndroidManifest.xml
+done
 
 rm -rf $destGamePath/gen/*
 cd $destLibDir
