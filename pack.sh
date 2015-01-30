@@ -79,6 +79,7 @@ done
 
 fromPackageName=`sed -n 1p packagename`
 toPackageName=`sed -n 2p packagename`
+sed -i '' "s/$fromPackageName/$toPackageName/g" $destGamePath/AndroidManifest.xml
 if [ ! -z "$fromPackageName" ] && [ ! -z "$toPackageName" ]
 then
 	echo "change R..."
