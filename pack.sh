@@ -71,6 +71,12 @@ mv processed_mobage_market.xml $destGamePath/res/xml/mobage_market.xml
 php process_alliance.php $destGamePath/res/xml/mobage_alliance.xml $channelInfo
 mv processed_mobage_alliance.xml $destGamePath/res/xml/mobage_alliance.xml
 
+for line in `cat $customManifestInfo` 
+do
+	sed -i '' "s/${line%=*}/${line#*=}/g" $destGamePath/AndroidManifest.xml
+	sed -i '' "s/${line%=*}/${line#*=}/g" packagename
+done
+
 fromPackageName=`sed -n 1p packagename`
 toPackageName=`sed -n 2p packagename`
 if [ ! -z "$fromPackageName" ] && [ ! -z "$toPackageName" ]
@@ -88,12 +94,6 @@ then
 	done
 	cd -
 fi
-
-for line in `cat $customManifestInfo` 
-do
-	#array[${line%=*}]=${line#*=}
-	sed -i '' "s/${line%=*}/${line#*=}/g" $destGamePath/AndroidManifest.xml
-done
 
 rm -rf $destGamePath/gen/*
 cd $destLibDir

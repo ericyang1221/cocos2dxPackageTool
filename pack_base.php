@@ -234,8 +234,8 @@ function mergePackageName($arrayFrom,$arrayTo,$dom){
 	}
 	$tmpArray = explode(".",$fromPackageName);
 	$lastName = $tmpArray[count($tmpArray)-1];
-	echo $lastName."\n";
-	if(startsWith($lastName, "g")){
+	echo "lastName=".$lastName."\n";
+	if(startsWith($lastName, "g1")){
 		$lastName = false;
 	}
 	$root = $dom->documentElement;
@@ -246,6 +246,7 @@ function mergePackageName($arrayFrom,$arrayTo,$dom){
 				$attr->nodeValue = $originToPackageName.".".$lastName;
 			}
 			$editedToPackageName = $attr->nodeValue;
+			echo "editedToPackageName=".$editedToPackageName."\n";
 			break;
 		}
 	}
