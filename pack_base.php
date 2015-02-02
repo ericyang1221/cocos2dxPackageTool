@@ -233,19 +233,29 @@ function mergePackageName($arrayFrom,$arrayTo,$dom){
 		}
 	}
 	$tmpArray = explode(".",$fromPackageName);
-	$lastName = $tmpArray[count($tmpArray)-1];
-	echo "lastName=".$lastName."\n";
-	if(startsWith($lastName, "g1")){
-		$lastName = false;
+	$tmpArrayCount = count($tmpArray);
+	for ($i=0; $i<$tmpArrayCount; $i++) {
+		$tmpStr = $tmpArray[$i];
+		if(startsWith($tmpStr, "g1")){
+			$lastIndex = $i;
+			break;
+		}
 	}
+	$suffix = false;
+	for ($i=$lastIndex+1; $i<$tmpArrayCount; $i++) {
+		$suffix = $suffix.".".$tmpArray[$i];
+	}
+	echo "suffix=".$suffix."\n";
 	$root = $dom->documentElement;
 	foreach ($root->attributes as $attr){
 		if($attr->nodeName == 'package'){
 			$originToPackageName = $attr->nodeValue;
-			if($lastName){
-				$attr->nodeValue = $originToPackageName.".".$lastName;
+			if($suffix){
+// 				$attr->nodeValue = $originToPackageName.$suffix;
+				$tmpPackageName = $originToPackageName.$suffix;
 			}
-			$editedToPackageName = $attr->nodeValue;
+// 			$editedToPackageName = $attr->nodeValue;
+			$editedToPackageName = $tmpPackageName;
 			echo "editedToPackageName=".$editedToPackageName."\n";
 			break;
 		}
