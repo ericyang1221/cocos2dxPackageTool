@@ -9,6 +9,7 @@ metaDataConf="$allianceDir/${gameName}params/metaData.conf"
 gameInfo="$allianceDir/${gameName}params/gameInfo.conf"
 channelInfo="$allianceDir/${gameName}params/channelInfo.conf"
 customManifestInfo="$allianceDir/${gameName}params/customManifestInfo.conf"
+rmlibsInfo="$allianceDir/${gameName}params/rmlibs.conf"
 orientation="${3}"
 customFileDir="$allianceDir/${gameName}params/customFiles/"
 
@@ -97,6 +98,12 @@ then
 	done
 	cd -
 fi
+
+for line in `cat $rmlibsInfo` 
+do
+	echo "rm -rf $destGamePath/libs/$line*"
+	rm -rf $destGamePath/libs/$line*
+done
 
 rm -rf $destGamePath/gen/*
 cd $destLibDir
