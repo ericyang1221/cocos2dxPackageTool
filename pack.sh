@@ -10,6 +10,7 @@ gameInfo="$allianceDir/${gameName}params/gameInfo.conf"
 channelInfo="$allianceDir/${gameName}params/channelInfo.conf"
 customManifestInfo="$allianceDir/${gameName}params/customManifestInfo.conf"
 orientation="${3}"
+customFileDir="$allianceDir/${gameName}params/customFiles/"
 
 if [ ! -d "$gameDir" ]; 
 then
@@ -52,6 +53,7 @@ cp -R $mobageNativeLib/ $destLibDir/
 rsync -vzrtopgu -progress $mobageNativeLib/assets/ $destGamePath/assets/
 #rsync -vzrtopgu -progress $mobageNativeLib/libs/armeabi/ $destGamePath/libs/armeabi/
 #rsync -vzrtopgu -progress $mobageNativeSample/libs/ $destGamePath/libs/
+rsync -vzrtopgu -progress $customFileDir $destGamePath/
 
 cp -R $mobageNativeLib/res/xml/ $destGamePath/res/xml/
 
