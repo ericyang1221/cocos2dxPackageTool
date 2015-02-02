@@ -73,7 +73,6 @@ mv processed_mobage_alliance.xml $destGamePath/res/xml/mobage_alliance.xml
 
 for line in `cat $customManifestInfo` 
 do
-	sed -i '' "s/${line%=*}/${line#*=}/g" $destGamePath/AndroidManifest.xml
 	sed -i '' "s/${line%=*}/${line#*=}/g" packagename
 done
 
@@ -95,6 +94,11 @@ then
 	done
 	cd -
 fi
+
+for line in `cat $customManifestInfo` 
+do
+	sed -i '' "s/${line%=*}/${line#*=}/g" $destGamePath/AndroidManifest.xml
+done
 
 rm -rf $destGamePath/gen/*
 cd $destLibDir
